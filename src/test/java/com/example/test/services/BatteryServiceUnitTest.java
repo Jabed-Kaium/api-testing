@@ -1,6 +1,7 @@
 package com.example.test.services;
 
 import com.example.test.Response.BatteryResponse;
+import com.example.test.TestApplication;
 import com.example.test.dto.BatteryDto;
 import com.example.test.exception.BatteryNotFoundException;
 import com.example.test.mapper.BatteryMapper;

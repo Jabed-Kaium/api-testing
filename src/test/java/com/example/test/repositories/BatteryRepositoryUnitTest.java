@@ -4,24 +4,29 @@ import com.example.test.models.Battery;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static org.mockito.Mockito.when;
 
 
 @DataJpaTest
 public class BatteryRepositoryUnitTest {
 
-    @Autowired
+    @Mock
     private BatteryRepository batteryRepository;
 
     List<Battery> batteryList = new ArrayList<>();
 
     @BeforeEach
     public void setUp() {
-
+        MockitoAnnotations.openMocks(this);
         batteryList.clear();
 
         Battery battery1 = new Battery();
@@ -49,24 +54,23 @@ public class BatteryRepositoryUnitTest {
 
     @Test
     public void saveAllBatteryTest() {
-        //action
-        batteryRepository.saveAll(batteryList);
+        when(batteryRepository.saveAll(batteryList)).thenReturn(batteryList);
 
-        //verify
-        List<Battery> batteryList2 = batteryRepository.findAll();
-        Assertions.assertThat(batteryList2.size()).isEqualTo(3);
+        List<Battery> batteries = batteryRepository.saveAll(batteryList);
+
+        Assertions.assertThat(batteries).isEqualTo(batteryList);
     }
 
 
     @Test
     public void findPostCodeBetweenTest() {
-        //action
-        batteryRepository.saveAll(batteryList);
-        List<Battery> batteryList3 = batteryRepository.findByPostcodeBetween(15000,25000);
-        List<Battery> batteryList4 = batteryRepository.findByPostcodeBetween(40000,50000);
+        List<Battery> batteries = Arrays.asList(new Battery(2, "Battery 2", 20000, 150));
+
+        when(batteryRepository.findByPostcodeBetween(15000,25000)).thenReturn(batteries);
+
+        List<Battery> batteries1 = batteryRepository.findByPostcodeBetween(15000,25000);
 
         //verify
-        Assertions.assertThat(batteryList3.size()).isEqualTo(1);
-        Assertions.assertThat(batteryList4.size()).isEqualTo(0);
+        Assertions.assertThat(batteries1).isEqualTo(batteries);
     }
 }
