@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.example.test.services.BatteryServiceUnitTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.960 s <<< FAILURE! -- in com.example.test.services.BatteryServiceUnitTest
+com.example.test.services.BatteryServiceUnitTest.saveBatteriesTest -- Time elapsed: 0.951 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+
+expected: 2
+ but was: 0
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at com.example.test.services.BatteryServiceUnitTest.saveBatteriesTest(BatteryServiceUnitTest.java:93)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

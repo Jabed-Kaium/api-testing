@@ -11,7 +11,5 @@ import java.util.List;
 @Repository
 public interface BatteryRepository extends JpaRepository<Battery, Integer> {
 
-    //query and method for getting all batteries in given range
-    @Query("SELECT b FROM Battery b WHERE b.postcode BETWEEN :mincode AND :maxcode")
-    List<Battery>findByPostcodeRange(@Param("mincode") String mincode, @Param("maxcode") String maxcode);
+    List<Battery> findByPostcodeBetween(int mincode, int maxcode);
 }

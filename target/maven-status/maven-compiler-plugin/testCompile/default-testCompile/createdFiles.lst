@@ -1,0 +1,3 @@
+com\example\test\TestApplicationTests.class
+com\example\test\services\BatteryServiceUnitTest.class
+com\example\test\repositories\BatteryRepositoryUnitTest.class

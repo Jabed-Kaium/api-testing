@@ -1,0 +1,13 @@
+com\example\test\mapper\BatteryMapper.class
+com\example\test\TestApplication.class
+com\example\test\dto\BatteryDto.class
+com\example\test\services\BatteryService.class
+com\example\test\mapper\BatteryMapperImpl.class
+com\example\test\exception\InvalidBatteryListException.class
+com\example\test\Response\BatteryResponse.class
+com\example\test\Response\Statistics.class
+com\example\test\exceptionHandler\GlobalExceptionHandler.class
+com\example\test\exception\BatteryNotFoundException.class
+com\example\test\controllers\Controller.class
+com\example\test\repositories\BatteryRepository.class
+com\example\test\models\Battery.class
