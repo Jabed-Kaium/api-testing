@@ -22,7 +22,7 @@ public class Controller {
 
     //endpoint for saving batteries
     @PostMapping("/batteries")
-    public ResponseEntity<Map<String, Object>> addBatteries(@RequestBody List<BatteryDto> batteries) {
+    public ResponseEntity<Map<String, Object>> addBatteries(@RequestBody @Valid List<BatteryDto> batteries) {
         List<Battery> savedBatteries = batteryService.saveBatteries(batteries);
         Map<String, Object> response = new LinkedHashMap<>();
         LocalTime now = LocalTime.now();
