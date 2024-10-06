@@ -29,27 +29,11 @@ public class BatteryRepositoryUnitTest {
         MockitoAnnotations.openMocks(this);
         batteryList.clear();
 
-        Battery battery1 = new Battery();
-        battery1.setId(1);
-        battery1.setName("Battery 1");
-        battery1.setPostcode(10000);
-        battery1.setWattCapacity(100);
+        Battery battery1 = new Battery(1, "Battery 1", 10000, 100);
+        Battery battery2 = new Battery(2, "Battery 2", 20000, 150);
+        Battery battery3 = new Battery(3, "Battery 3", 30000, 200);
 
-        Battery battery2 = new Battery();
-        battery2.setId(2);
-        battery2.setName("Battery 2");
-        battery2.setPostcode(20000);
-        battery2.setWattCapacity(150);
-
-        Battery battery3 = new Battery();
-        battery3.setId(3);
-        battery3.setName("Battery 3");
-        battery3.setPostcode(30000);
-        battery3.setWattCapacity(200);
-
-        batteryList.add(battery1);
-        batteryList.add(battery2);
-        batteryList.add(battery3);
+        batteryList = Arrays.asList(battery1, battery2, battery3);
     }
 
     @Test

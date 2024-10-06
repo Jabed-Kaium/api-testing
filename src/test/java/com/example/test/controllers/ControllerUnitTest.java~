@@ -50,11 +50,10 @@ public class ControllerUnitTest {
 
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(Controller.class).build();
 
         batteryDtoList.clear();
 
-        BatteryDto batteryDto1 = new BatteryDto();
+        BatteryDto batteryDto1 = new BatteryDto("Batte");
         batteryDto1.setName("Battery 1");
         batteryDto1.setPostcode(10000);
         batteryDto1.setWattCapacity(100);

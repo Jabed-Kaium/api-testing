@@ -53,33 +53,17 @@ public class ControllerUnitTest {
 
         batteryDtoList.clear();
 
-        BatteryDto batteryDto1 = new BatteryDto();
-        batteryDto1.setName("Battery 1");
-        batteryDto1.setPostcode(10000);
-        batteryDto1.setWattCapacity(100);
+        BatteryDto batteryDto1 = new BatteryDto("Battery 1", 10000, 100);
+        BatteryDto batteryDto2 = new BatteryDto("Battery 2", 20000, 150);
 
-        BatteryDto batteryDto2 = new BatteryDto();
-        batteryDto2.setName("Battery 2");
-        batteryDto2.setPostcode(20000);
-        batteryDto2.setWattCapacity(150);
-
-        batteryDtoList.add(batteryDto1);
-        batteryDtoList.add(batteryDto2);
+        batteryDtoList = Arrays.asList(batteryDto1, batteryDto2);
 
         batteryList.clear();
 
-        Battery battery1 = new Battery();
-        battery1.setName("Battery 1");
-        battery1.setPostcode(10000);
-        battery1.setWattCapacity(100);
+        Battery battery1 = new Battery(1, "Battery 1", 10000, 100);
+        Battery battery2 = new Battery(2, "Battery 2", 20000, 150);
 
-        Battery battery2 = new Battery();
-        battery2.setName("Battery 2");
-        battery2.setPostcode(20000);
-        battery2.setWattCapacity(150);
-
-        batteryList.add(battery1);
-        batteryList.add(battery2);
+        batteryList = Arrays.asList(battery1, battery2);
     }
 
     @Test

@@ -18,13 +18,19 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class BatteryServiceUnitTest {
 
@@ -34,14 +40,11 @@ public class BatteryServiceUnitTest {
     @Mock
     private BatteryMapper batteryMapper;
 
-
-    @InjectMocks @Autowired
+    @InjectMocks
     private BatteryService batteryService;
 
     List<BatteryDto> batteryDtoList = new ArrayList<>();
     List<Battery> batteryList = new ArrayList<>();
-
-    List<Battery> batteries = new ArrayList<>();
 
     @BeforeEach
     public void setUp() {
@@ -50,36 +53,18 @@ public class BatteryServiceUnitTest {
         batteryDtoList.clear();
         batteryList.clear();
 
-        BatteryDto batteryDto1 = new BatteryDto();
-        batteryDto1.setName("Battery 1");
-        batteryDto1.setPostcode(10000);
-        batteryDto1.setWattCapacity(100);
+        BatteryDto batteryDto1 = new BatteryDto("Battery 1", 10000, 100);
+        BatteryDto batteryDto2 = new BatteryDto("Battery 2", 20000, 150);
 
-        BatteryDto batteryDto2 = new BatteryDto();
-        batteryDto2.setName("Battery 2");
-        batteryDto2.setPostcode(20000);
-        batteryDto2.setWattCapacity(150);
-
-        batteryDtoList.add(batteryDto1);
-        batteryDtoList.add(batteryDto2);
+        batteryDtoList = Arrays.asList(batteryDto1, batteryDto2);
 
         System.out.println("Size of dto list: " + batteryDtoList.size());
         System.out.println(batteryDtoList);
 
-        Battery battery1 = new Battery();
-        battery1.setId(1);
-        battery1.setName("Battery 1");
-        battery1.setPostcode(10000);
-        battery1.setWattCapacity(100);
+        Battery battery1 = new Battery(1, "Battery 1", 10000, 100);
+        Battery battery2 = new Battery(2, "Battery 2", 20000, 150);
 
-        Battery battery2 = new Battery();
-        battery2.setId(2);
-        battery2.setName("Battery 2");
-        battery2.setPostcode(20000);
-        battery2.setWattCapacity(150);
-
-        batteryList.add(battery1);
-        batteryList.add(battery2);
+        batteryList = Arrays.asList(battery1, battery2);
 
         System.out.println("Size of entity list: " + batteryList.size());
         System.out.println(batteryList);
@@ -87,16 +72,21 @@ public class BatteryServiceUnitTest {
 
     @Test
     public void saveBatteriesTest() {
+        when(batteryMapper.toBatteryList(batteryDtoList)).thenReturn(batteryList);
+        when(batteryRepository.saveAll(batteryList)).thenReturn(batteryList);
 
-        batteries = batteryService.saveBatteries(batteryDtoList);
+        List<Battery> savedBatteries = batteryService.saveBatteries(batteryDtoList);
 
-        Assertions.assertThat(batteries.size()).isEqualTo(batteryList.size());
+        Assertions.assertThat(savedBatteries.size()).isEqualTo(batteryList.size());
     }
 
     @Test
     public void getBatteriesTest() {
 
+        when(batteryRepository.findByPostcodeBetween(10000, 20000)).thenReturn(batteryList);
+
         BatteryResponse batteryResponse = batteryService.getBatteryResponse("10000-20000");
+
         Assertions.assertThat(batteryResponse).isNotNull();
         Assertions.assertThat(batteryResponse.getBatteryNames().size()).isEqualTo(2);
         Assertions.assertThat(batteryResponse.getBatteryNames().get(0)).isEqualTo("Battery 1");
