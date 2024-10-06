@@ -36,7 +36,7 @@ public class Controller {
 
     //endpoint for retrieving batteries with given range
     @GetMapping("/batteries")
-    public ResponseEntity<Map<String, Object>> getBatteriesByRange(@RequestParam("postcodeRange") @Valid String postcodeRange) {
+    public ResponseEntity<Map<String, Object>> getBatteriesByRange(@RequestParam("postcodeRange") String postcodeRange) {
         validatePostcodeRange(postcodeRange);
         BatteryResponse batteryResponse = batteryService.getBatteryResponse(postcodeRange);
 

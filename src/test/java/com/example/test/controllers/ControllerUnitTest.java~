@@ -50,6 +50,7 @@ public class ControllerUnitTest {
 
     @BeforeEach
     public void setUp() {
+        mockMvc = MockMvcBuilders.standaloneSetup(Controller.class).build();
 
         batteryDtoList.clear();
 

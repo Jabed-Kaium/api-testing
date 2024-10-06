@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-03T16:22:06+0600",
+    date = "2024-10-06T12:06:46+0600",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Oracle Corporation)"
 )
 @Component
@@ -39,8 +39,8 @@ public class BatteryMapperImpl implements BatteryMapper {
         BatteryDto batteryDto = new BatteryDto();
 
         batteryDto.setName( battery.getName() );
-        batteryDto.setWattCapacity( battery.getWattCapacity() );
         batteryDto.setPostcode( battery.getPostcode() );
+        batteryDto.setWattCapacity( battery.getWattCapacity() );
 
         return batteryDto;
     }
