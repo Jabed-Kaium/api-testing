@@ -138,6 +138,36 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.10</version>
+                <!-- Use the latest version supporting your Java version -->
+                <executions>
+                    <!-- Prepare the agent to collect coverage data during test execution -->
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <!-- Generate the coverage report -->
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <!-- Generate report after test phase -->
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/jacoco</outputDirectory>
+                            <outputFormats>HTML</outputFormats>
+                            <!-- Specify format directly -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

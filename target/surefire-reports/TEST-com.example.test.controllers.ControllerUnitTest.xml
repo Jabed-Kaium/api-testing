@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.test.services.BatteryServiceUnitTest" time="0.096" tests="2" errors="1" skipped="0" failures="1">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.test.controllers.ControllerUnitTest" time="6.055" tests="7" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -64,36 +64,37 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="saveBatteriesTest" classname="com.example.test.services.BatteryServiceUnitTest" time="0.083">
-    <failure message="&#10;expected: 2&#10; but was: 0" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
+  <testcase name="emptyBatteryListShouldReturnBadRequest" classname="com.example.test.controllers.ControllerUnitTest" time="0.597">
+    <system-out><![CDATA[17:23:10.525 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.test.controllers.ControllerUnitTest]: ControllerUnitTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+17:23:10.806 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.test.TestApplication for test class com.example.test.controllers.ControllerUnitTest
+17:23:10.990 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
 
-expected: 2
- but was: 0
-	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-	at com.example.test.services.BatteryServiceUnitTest.saveBatteriesTest(BatteryServiceUnitTest.java:80)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-]]></failure>
-    <system-out><![CDATA[Size of dto list: 2
-[com.example.test.dto.BatteryDto@43c1e01d, com.example.test.dto.BatteryDto@230f9f56]
-Size of entity list: 2
-[com.example.test.models.Battery@56232a19, com.example.test.models.Battery@2b25277b]
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2024-10-06T17:23:11.690+06:00  INFO 19736 --- [           main] c.e.test.controllers.ControllerUnitTest  : Starting ControllerUnitTest using Java 21.0.3 with PID 19736 (started by jabed.kaium in C:\Users\jabed.kaium\api-testing)
+2024-10-06T17:23:11.692+06:00  INFO 19736 --- [           main] c.e.test.controllers.ControllerUnitTest  : No active profile set, falling back to 1 default profile: "default"
+2024-10-06T17:23:15.391+06:00  INFO 19736 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-10-06T17:23:15.391+06:00  INFO 19736 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-10-06T17:23:15.394+06:00  INFO 19736 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-10-06T17:23:15.430+06:00  INFO 19736 --- [           main] c.e.test.controllers.ControllerUnitTest  : Started ControllerUnitTest in 4.468 seconds (process running for 6.542)
 ]]></system-out>
+    <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\jabed.kaium\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.17\byte-buddy-agent-1.14.17.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
   </testcase>
-  <testcase name="getBatteriesTest" classname="com.example.test.services.BatteryServiceUnitTest" time="0.005">
-    <error message="Batteries not found in given postcode range" type="com.example.test.exception.BatteryNotFoundException"><![CDATA[com.example.test.exception.BatteryNotFoundException: Batteries not found in given postcode range
-	at com.example.test.services.BatteryService.getBatteryResponse(BatteryService.java:65)
-	at com.example.test.services.BatteryServiceUnitTest.getBatteriesTest(BatteryServiceUnitTest.java:88)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-]]></error>
-    <system-out><![CDATA[Size of dto list: 2
-[com.example.test.dto.BatteryDto@cdac87d, com.example.test.dto.BatteryDto@2fc41b82]
-Size of entity list: 2
-[com.example.test.models.Battery@65b0d7e0, com.example.test.models.Battery@3615fc07]
-]]></system-out>
-  </testcase>
+  <testcase name="invalidPostcodeRangeShouldReturnBadRequest" classname="com.example.test.controllers.ControllerUnitTest" time="0.024"/>
+  <testcase name="emptyPostcodeRangeShouldReturnBadRequest" classname="com.example.test.controllers.ControllerUnitTest" time="0.008"/>
+  <testcase name="invalidBatteryListShouldReturnBadRequest" classname="com.example.test.controllers.ControllerUnitTest" time="0.033"/>
+  <testcase name="saveBetteriesTest" classname="com.example.test.controllers.ControllerUnitTest" time="0.02"/>
+  <testcase name="getBatteriesByRangeTest" classname="com.example.test.controllers.ControllerUnitTest" time="0.026"/>
+  <testcase name="shouldReturnBatteryNotFound" classname="com.example.test.controllers.ControllerUnitTest" time="0.007"/>
 </testsuite>

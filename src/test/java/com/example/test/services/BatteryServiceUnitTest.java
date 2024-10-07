@@ -4,6 +4,7 @@ import com.example.test.Response.BatteryResponse;
 import com.example.test.TestApplication;
 import com.example.test.dto.BatteryDto;
 import com.example.test.exception.BatteryNotFoundException;
+import com.example.test.exception.InvalidBatteryListException;
 import com.example.test.mapper.BatteryMapper;
 import com.example.test.models.Battery;
 import com.example.test.repositories.BatteryRepository;
@@ -24,12 +25,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BatteryServiceUnitTest {
@@ -40,7 +41,7 @@ public class BatteryServiceUnitTest {
     @Mock
     private BatteryMapper batteryMapper;
 
-    @InjectMocks
+//    @InjectMocks
     private BatteryService batteryService;
 
     List<BatteryDto> batteryDtoList = new ArrayList<>();
@@ -49,6 +50,8 @@ public class BatteryServiceUnitTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        batteryService = new BatteryService(batteryRepository, batteryMapper);
 
         batteryDtoList.clear();
         batteryList.clear();
@@ -72,12 +75,37 @@ public class BatteryServiceUnitTest {
 
     @Test
     public void saveBatteriesTest() {
+
         when(batteryMapper.toBatteryList(batteryDtoList)).thenReturn(batteryList);
         when(batteryRepository.saveAll(batteryList)).thenReturn(batteryList);
 
         List<Battery> savedBatteries = batteryService.saveBatteries(batteryDtoList);
 
-        Assertions.assertThat(savedBatteries.size()).isEqualTo(batteryList.size());
+        assertThat(savedBatteries.size()).isEqualTo(batteryList.size());
+        verify(batteryRepository, Mockito.times(1)).saveAll(batteryList);
+    }
+
+    @Test
+    public void emptyBatteryListThrowsException() {
+        List<BatteryDto> emptyBatteryDtoList = new ArrayList<>();
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> batteryService.saveBatteries(emptyBatteryDtoList));
+
+        assertThat(exception.getMessage()).isEqualTo("Battery list cannot be empty");
+        verify(batteryRepository, never()).saveAll(anyList());
+    }
+
+    @Test
+    public void invalidBatteryListThrowsException() {
+        BatteryDto batteryDto1 = new BatteryDto("", 10000, 100);
+        BatteryDto batteryDto2 = new BatteryDto("Battery 2", 100, 150);
+        BatteryDto batteryDto3 = new BatteryDto("Battery 3", 20000, -1);
+        List<BatteryDto> invalidBatteryDtoList = Arrays.asList(batteryDto1, batteryDto2, batteryDto3);
+
+        InvalidBatteryListException exception = assertThrows(InvalidBatteryListException.class, () -> batteryService.saveBatteries(invalidBatteryDtoList));
+
+        assertThat(exception.getInvalidBatteryDtoList()).isEqualTo(invalidBatteryDtoList);
+        verify(batteryRepository, never()).saveAll(anyList());
     }
 
     @Test
@@ -87,12 +115,32 @@ public class BatteryServiceUnitTest {
 
         BatteryResponse batteryResponse = batteryService.getBatteryResponse("10000-20000");
 
-        Assertions.assertThat(batteryResponse).isNotNull();
-        Assertions.assertThat(batteryResponse.getBatteryNames().size()).isEqualTo(2);
-        Assertions.assertThat(batteryResponse.getBatteryNames().get(0)).isEqualTo("Battery 1");
-        Assertions.assertThat(batteryResponse.getStatistics().getTotalWattCapacity()).isEqualTo(250);
-        Assertions.assertThat(batteryResponse.getStatistics().getAverageWattCapacity()).isEqualTo(125.0);
+        assertThat(batteryResponse).isNotNull();
+        assertThat(batteryResponse.getBatteryNames().size()).isEqualTo(2);
+        assertThat(batteryResponse.getBatteryNames().get(0)).isEqualTo("Battery 1");
+        assertThat(batteryResponse.getStatistics().getTotalWattCapacity()).isEqualTo(250);
+        assertThat(batteryResponse.getStatistics().getAverageWattCapacity()).isEqualTo(125.0);
 
     }
 
+    @Test
+    public void getBatteriesInvalidPostcodeRangeTestThrowsException() {
+        String invalidPostcodeRange = "40000-30000";
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> batteryService.getBatteryResponse(invalidPostcodeRange));
+
+        assertThat(exception.getMessage()).isEqualTo("Invalid postcode range");
+
+        verify(batteryRepository, never()).findByPostcodeBetween(anyInt(), anyInt());
+    }
+
+    @Test
+    public void getBatteryResponseBatteryNotFoundTestThrowsException() {
+        String postcodeRange = "40000-50000";
+
+        BatteryNotFoundException exception = assertThrows(BatteryNotFoundException.class, () -> batteryService.getBatteryResponse(postcodeRange));
+
+        assertThat(exception.getMessage()).isEqualTo("Batteries not found in given postcode range");
+        verify(batteryRepository, times(1)).findByPostcodeBetween(anyInt(), anyInt());
+    }
 }

@@ -1,15 +1,23 @@
 -------------------------------------------------------------------------------
 Test set: com.example.test.services.BatteryServiceUnitTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.960 s <<< FAILURE! -- in com.example.test.services.BatteryServiceUnitTest
-com.example.test.services.BatteryServiceUnitTest.saveBatteriesTest -- Time elapsed: 0.951 s <<< FAILURE!
+Tests run: 2, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.096 s <<< FAILURE! -- in com.example.test.services.BatteryServiceUnitTest
+com.example.test.services.BatteryServiceUnitTest.saveBatteriesTest -- Time elapsed: 0.083 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: 
 
 expected: 2
  but was: 0
 	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
 	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-	at com.example.test.services.BatteryServiceUnitTest.saveBatteriesTest(BatteryServiceUnitTest.java:93)
+	at com.example.test.services.BatteryServiceUnitTest.saveBatteriesTest(BatteryServiceUnitTest.java:80)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.example.test.services.BatteryServiceUnitTest.getBatteriesTest -- Time elapsed: 0.005 s <<< ERROR!
+com.example.test.exception.BatteryNotFoundException: Batteries not found in given postcode range
+	at com.example.test.services.BatteryService.getBatteryResponse(BatteryService.java:65)
+	at com.example.test.services.BatteryServiceUnitTest.getBatteriesTest(BatteryServiceUnitTest.java:88)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)

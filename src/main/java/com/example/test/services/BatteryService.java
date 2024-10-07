@@ -55,12 +55,13 @@ public class BatteryService {
         int mincode = Integer.parseInt(postcodes[0]);
         int maxcode = Integer.parseInt(postcodes[1]);
 
-        //list of batteries in given range
-        List<Battery> batteries = batteryRepository.findByPostcodeBetween(mincode,maxcode);
-
         if(mincode > maxcode) {
             throw new IllegalArgumentException("Invalid postcode range");
         }
+
+        //list of batteries in given range
+        List<Battery> batteries = batteryRepository.findByPostcodeBetween(mincode,maxcode);
+
         if(batteries.isEmpty()) {
             throw new BatteryNotFoundException("Batteries not found in given postcode range");
         }
